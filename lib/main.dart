@@ -15,25 +15,27 @@ class _MyappState extends State<Myapp> {
     return  Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(270.0),
+        preferredSize: Size.fromHeight(300.0),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          flexibleSpace: Stack(
-            children: [
-
-              Image(
-                image: AssetImage("assets/images/Rectangle 1@3x.png"),
-                fit: BoxFit.cover,
-                height: 400,
-                width: 410 ,
-              ),
-              Image(image: AssetImage("assets/images/Layer 6.png"),
-                fit: BoxFit.cover,
-                height: 150,
-                width: 180,
-              ),
-            ],
+          flexibleSpace: ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.zero ,bottom: Radius.circular(45)),
+            child: Stack(
+              children: [
+                Image(
+                  image: AssetImage("assets/images/Rectangle 1.png"),
+                  fit: BoxFit.cover,
+                  height: 300,
+                  width: 414,
+                ),
+                Image(image: AssetImage("assets/images/Layer 6.png"),
+                  fit: BoxFit.cover,
+                  height: 150,
+                  //width: 180,
+                ),
+              ],
+            ),
           ),
           leading: Padding(
             padding: const EdgeInsets.only(top: 27.0,left: 32),
@@ -62,10 +64,10 @@ class _MyappState extends State<Myapp> {
           ],
 
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(49.0),
+            preferredSize: Size.fromHeight(0),
             child: Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(bottom:41.58,left:33),
+              padding: EdgeInsets.only(bottom:63.58,left:33),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,12 +117,13 @@ class _MyappState extends State<Myapp> {
               child: Column(
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.only(top:68,left: 32,right: 32),
+                      padding: EdgeInsets.only(top:10,left: 32,right: 32),
                     child: Container(
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.white,
+                            color: Color(0x0D000000),
                             //spreadRadius: 10,
                             blurRadius: 10,
                           )
@@ -145,16 +148,15 @@ class _MyappState extends State<Myapp> {
                    Column(
                      children: [
                        Padding(
-                        padding: EdgeInsets.only(
-                            left: 32, right: 32, top: 30, bottom: 20,
-                        ),
+                        padding: EdgeInsets.only(top: 30,left: 32, right: 32),
                          child: Container(
-                           decoration: BoxDecoration(
+                           decoration: const BoxDecoration(
+                             color: Colors.white,
                              boxShadow: [
                                BoxShadow(
-                                 color: Colors.white,
+                                 color: Color(0x0D000000),
                                  blurRadius: 10,
-                               )
+                               ),
                              ]
                            ),
                            child: TextField(
@@ -193,27 +195,25 @@ class _MyappState extends State<Myapp> {
                    ),
                   FlatButton(
                     onPressed: () {},
-                    child: Text(
-                      'Forgotten account?',
-                      style: TextStyle(
-                        fontFamily: "Nunito",
-                        fontWeight: FontWeight.normal,
-                        decoration: TextDecoration.underline,
-                          color: Colors.black,
-                          fontSize: 15,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20,bottom: 50),
+                      child: Text(
+                        'Forgotten account?',
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.normal,
+                          decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontSize: 15,
+                        ),
                       ),
                     ),
                   ),
 
                   Stack(
                     children: [
-                      Image(image: AssetImage("assets/images/Layer 6.png"),
-                        fit: BoxFit.cover,
-                        //height: 150,
-                        //width: 180,
-                      ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.only(left:32,right:32,bottom: 72),
                         child: Container(height: 56,
                           width: 350,
                           decoration: BoxDecoration(
@@ -234,17 +234,28 @@ class _MyappState extends State<Myapp> {
 
                         ),
                       ),
-                    ],
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          //color: Colors.black,
+                          margin: const EdgeInsets.only(left:33.6,top:40.95),
+                          child: (Image.asset("assets/images/Layer 6_1.png",
+                            fit: BoxFit.cover,
+                            color: Colors.black,
+                            height: 416.51,
+                            width: 550.68,
+                          )),
+                        ),
+                      )
+                    ]
+
                   ),
                 ],
 
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: (Image(image: AssetImage("assets/images/Layer 6.png"))),
-          )
+
         ],
       ),
     );
