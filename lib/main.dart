@@ -18,7 +18,7 @@ class _MyappState extends State<Myapp> {
         preferredSize: Size.fromHeight(300.0),
         child: buildAppBar()
       ),
-      body: body(),
+      body: buildBody(),
     );
   }
   Widget buildAppBar(){
@@ -34,7 +34,7 @@ class _MyappState extends State<Myapp> {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(0),
         child:
-        titleSubtitle(),
+        buildTitleSubTitle(),
       ),
     );
   }
@@ -88,7 +88,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget titleSubtitle(){
+  Widget buildTitleSubTitle(){
     return Container(
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(bottom:63.58,left:33),
@@ -96,13 +96,13 @@ class _MyappState extends State<Myapp> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
-          appbarTitle(),
-          appbarSubTitle(),
+          buildAppBarTitle(),
+          buildAppBarSubTitle(),
         ],
       ),
     );
   }
-  Widget appbarTitle(){
+  Widget buildAppBarTitle(){
     return Text("Let's Login",
       style: TextStyle(
           fontFamily: "Nunito",
@@ -112,7 +112,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget appbarSubTitle(){
+  Widget buildAppBarSubTitle(){
     return RichText(
       text: TextSpan(
           text: "Do you have an Login?",
@@ -136,7 +136,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget body(){
+  Widget buildBody(){
     return Stack(
 
       children: [
@@ -144,18 +144,18 @@ class _MyappState extends State<Myapp> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                boxOfEmail(),
+                buildBoxOfEmail(),
                 Column(
                   children: [
-                    boxOfPassword(),
+                    buildBoxOfPassword(),
                   ],
                 ),
 
-                forgotAccountLabel(),
+                buildForgotAccountLabel(),
                 Stack(
                     children: [
-                      loginButton(),
-                      backgroundImage(),
+                      getLoginButton(),
+                      grtBackgroundImage(),
                     ]
 
                 ),
@@ -168,7 +168,7 @@ class _MyappState extends State<Myapp> {
       ],
     );
   }
-  Widget boxOfEmail(){
+  Widget buildBoxOfEmail(){
     return  Padding(
       padding: EdgeInsets.only(top:10,left: 32,right: 32),
       child: Container(
@@ -199,7 +199,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget boxOfPassword(){
+  Widget buildBoxOfPassword(){
     return Padding(
       padding: EdgeInsets.only(top: 30,left: 32, right: 32),
       child: Container(
@@ -245,7 +245,7 @@ class _MyappState extends State<Myapp> {
 
     );
   }
-  Widget forgotAccountLabel(){
+  Widget buildForgotAccountLabel(){
     return  FlatButton(
       onPressed: () {},
       child: Text(
@@ -260,7 +260,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget loginButton(){
+  Widget getLoginButton(){
     return Padding(
       padding: const EdgeInsets.only(left:32,right:32,top: 50),
       child: Container(height: 56,
@@ -284,7 +284,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget backgroundImage(){
+  Widget grtBackgroundImage(){
     return Align(
       alignment: Alignment.bottomRight,
       child: Container(
