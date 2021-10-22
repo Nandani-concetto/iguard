@@ -10,6 +10,17 @@ class Myapp extends StatefulWidget {
 }
 
 class _MyappState extends State<Myapp> {
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(300.0),
+        child: buildAppBar()
+      ),
+      body: body(),
+    );
+  }
   Widget getRectangleImage(){
     return Image(
       image: AssetImage("assets/images/Rectangle 1.png"),
@@ -18,23 +29,12 @@ class _MyappState extends State<Myapp> {
       width: 414,
     );
   }
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(300.0),
-        child: appBar()
-      ),
-      body: body(),
-    );
-  }
-  Widget appBar(){
+  Widget buildAppBar(){
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
       flexibleSpace:
-      appbarBOrder(),
+      buildAppBarBorder(),
       leading: getBackButton() ,
       actions: [
         getSignUp(),
@@ -46,7 +46,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget appbarBOrder(){
+  Widget buildAppBarBorder(){
     return ClipRRect(
       borderRadius: BorderRadius.vertical(top: Radius.zero ,bottom: Radius.circular(45)),
       child: Stack(
