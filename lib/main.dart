@@ -163,26 +163,23 @@ class _MyappState extends State<Myapp> {
     );
   }
   Widget forgotAccountLabel(){
-    return  ElevatedButton(
-      onPressed: () {},
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20,bottom: 50),
-        child: Text(
-          'Forgotten account?',
-          style: TextStyle(
-            fontFamily: "Nunito",
-            fontWeight: FontWeight.normal,
-            decoration: TextDecoration.underline,
-            color: Colors.black,
-            fontSize: 15,
-          ),
-        ),
-      ),
-    );
+    return  FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Forgotten account?',
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.normal,
+                          decoration: TextDecoration.underline,
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),
+                      ),
+                    );
   }
   Widget loginButton(){
     return Padding(
-      padding: const EdgeInsets.only(left:32,right:32,bottom: 72),
+      padding: const EdgeInsets.only(left:32,right:32,top: 50),
       child: Container(height: 56,
         width: 350,
         decoration: BoxDecoration(
@@ -190,7 +187,7 @@ class _MyappState extends State<Myapp> {
           borderRadius: BorderRadius.circular(16),
         ),
 
-        child: ElevatedButton(
+        child: FlatButton(
           onPressed: () {},
           child: Text('LOGIN',
             style: TextStyle(
@@ -270,6 +267,7 @@ class _MyappState extends State<Myapp> {
                        boxOfPassword(),
                      ],
                    ),
+
                   forgotAccountLabel(),
                   Stack(
                     children: [
