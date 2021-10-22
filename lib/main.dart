@@ -21,14 +21,6 @@ class _MyappState extends State<Myapp> {
       body: body(),
     );
   }
-  Widget getRectangleImage(){
-    return Image(
-      image: AssetImage("assets/images/Rectangle 1.png"),
-      fit: BoxFit.cover,
-      height: 300,
-      width: 414,
-    );
-  }
   Widget buildAppBar(){
     return AppBar(
       backgroundColor: Colors.white,
@@ -44,6 +36,14 @@ class _MyappState extends State<Myapp> {
         child:
         titleSubtitle(),
       ),
+    );
+  }
+  Widget getRectangleImage(){
+    return Image(
+      image: AssetImage("assets/images/Rectangle 1.png"),
+      fit: BoxFit.cover,
+      height: 300,
+      width: 414,
     );
   }
   Widget buildAppBarBorder(){
