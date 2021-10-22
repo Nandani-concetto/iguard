@@ -18,6 +18,43 @@ class _MyappState extends State<Myapp> {
       width: 414,
     );
   }
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(300.0),
+        child: appBar()
+      ),
+      body: body(),
+    );
+  }
+  Widget appBar(){
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      flexibleSpace:
+      appbarBOrder(),
+      leading: getBackButton() ,
+      actions: [
+        getSignUp(),
+      ],
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child:
+        titleSubtitle(),
+      ),
+    );
+  }
+  Widget appbarBOrder(){
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(top: Radius.zero ,bottom: Radius.circular(45)),
+      child: Stack(
+        children: [
+          getRectangleImage(),
+          getBoxImage(),
+        ],),);
+  }
   Widget getBoxImage(){
     return Image(image: AssetImage("assets/images/Layer 6.png"),
       fit: BoxFit.cover,
@@ -27,18 +64,18 @@ class _MyappState extends State<Myapp> {
   }
   Widget getBackButton(){
     return Padding(
-    padding: const EdgeInsets.only(top: 27.0,left: 32),
-    child: IconButton(
-      icon: Icon(Icons.arrow_back_ios,
-          color: Colors.white
+      padding: const EdgeInsets.only(top: 27.0,left: 32),
+      child: IconButton(
+        icon: Icon(Icons.arrow_back_ios,
+            color: Colors.white
+        ),
+        onPressed: () {},
+        //onPressed: ()
       ),
-      onPressed: () {},
-      //onPressed: ()
-    ),
-  );
+    );
   }
   Widget getSignUp(){
-   return Center(
+    return Center(
       child: Padding(
         padding: const EdgeInsets.only(top:32.84,right: 32),
         child: Text("SIGN UP",
@@ -48,6 +85,20 @@ class _MyappState extends State<Myapp> {
             fontSize: 18.0,
           ),
         ),
+      ),
+    );
+  }
+  Widget titleSubtitle(){
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.only(bottom:63.58,left:33),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:  [
+          appbarTitle(),
+          appbarSubTitle(),
+        ],
       ),
     );
   }
@@ -83,6 +134,38 @@ class _MyappState extends State<Myapp> {
             )
           ]
       ),
+    );
+  }
+  Widget body(){
+    return Stack(
+
+      children: [
+        Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                boxOfEmail(),
+                Column(
+                  children: [
+                    boxOfPassword(),
+                  ],
+                ),
+
+                forgotAccountLabel(),
+                Stack(
+                    children: [
+                      loginButton(),
+                      backgroundImage(),
+                    ]
+
+                ),
+              ],
+
+            ),
+          ),
+        ),
+
+      ],
     );
   }
   Widget boxOfEmail(){
@@ -164,18 +247,18 @@ class _MyappState extends State<Myapp> {
   }
   Widget forgotAccountLabel(){
     return  FlatButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Forgotten account?',
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontWeight: FontWeight.normal,
-                          decoration: TextDecoration.underline,
-                          color: Colors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                    );
+      onPressed: () {},
+      child: Text(
+        'Forgotten account?',
+        style: TextStyle(
+          fontFamily: "Nunito",
+          fontWeight: FontWeight.normal,
+          decoration: TextDecoration.underline,
+          color: Colors.black,
+          fontSize: 15,
+        ),
+      ),
+    );
   }
   Widget loginButton(){
     return Padding(
@@ -213,76 +296,6 @@ class _MyappState extends State<Myapp> {
           height: 416.51,
           width: 550.68,
         )),
-      ),
-    );
-  }
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(300.0),
-        child: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          flexibleSpace: ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.zero ,bottom: Radius.circular(45)),
-            child: Stack(
-              children: [
-                getRectangleImage(),
-                getBoxImage(),
-              ],),),
-          leading: getBackButton() ,
-          actions: [
-            getSignUp(),
-          ],
-
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(0),
-            child: Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(bottom:63.58,left:33),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  appbarTitle(),
-                  appbarSubTitle(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      body: Stack(
-
-        children: [
-          Center(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  boxOfEmail(),
-                   Column(
-                     children: [
-                       boxOfPassword(),
-                     ],
-                   ),
-
-                  forgotAccountLabel(),
-                  Stack(
-                    children: [
-                      loginButton(),
-                       backgroundImage(),
-                    ]
-
-                  ),
-                ],
-
-              ),
-            ),
-          ),
-
-        ],
       ),
     );
   }
