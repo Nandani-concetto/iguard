@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:iguard/first_demo.dart';
+import 'package:iguard/redirect_file.dart';
 void main() => runApp(MaterialApp(
 home: Myapp(),
 ));
 class Myapp extends StatefulWidget {
-  const Myapp({Key? key}) : super(key: key);
-
-  @override
+  const Myapp({Key? key}) : super(key: key);@override
   _MyappState createState() => _MyappState();
 }
-
 class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,6 @@ class _MyappState extends State<Myapp> {
   }
   Widget buildBody(){
     return Stack(
-
       children: [
         Center(
           child: SingleChildScrollView(
@@ -154,8 +153,9 @@ class _MyappState extends State<Myapp> {
                 buildForgotAccountLabel(),
                 Stack(
                     children: [
-                      getLoginButton(),
                       grtBackgroundImage(),
+                      getLoginButton(),
+
                     ]
 
                 ),
@@ -260,7 +260,7 @@ class _MyappState extends State<Myapp> {
       ),
     );
   }
-  Widget getLoginButton(){
+  Widget getLoginButton() {
     return Padding(
       padding: const EdgeInsets.only(left:32,right:32,top: 50),
       child: Container(height: 56,
@@ -269,9 +269,12 @@ class _MyappState extends State<Myapp> {
           color: Colors.black,
           borderRadius: BorderRadius.circular(16),
         ),
-
         child: FlatButton(
-          onPressed: () {},
+          onPressed:(){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> RedirectPage()),
+            );
+            //_getVolumeLevel();
+            },
           child: Text('LOGIN',
             style: TextStyle(
                 fontFamily: "Nunito",
