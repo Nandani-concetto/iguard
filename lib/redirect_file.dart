@@ -13,9 +13,32 @@ class RedirectPage extends StatefulWidget {
 }
 
 class _RedirectPageState extends State<RedirectPage> {
+
   static const platform = MethodChannel('com.concetto.volume');
-  //String volumeLevel = 'Unknown volume level.';
   String? volumeLevel;
+
+  void setMethodCallHandler() {
+    platform.setMethodCallHandler((MethodCall call) async {
+      switch(call.method){
+        case 'entry':
+          print('hello,${call.arguments}');
+          try {
+            setState(() {
+                        volumeLevel='Volume is ${call.arguments}';
+                      });
+
+            print('Here $volumeLevel');
+          } catch (e) {
+            print('error is $e');
+          }
+          break;
+      }
+
+
+
+    });
+  }
+
   void _getVolumeLevel() async {
     String localVolume = "No volume";
     try {
@@ -31,10 +54,11 @@ setState(() {
   }
 @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getVolumeLevel();
+    setMethodCallHandler();
   }
+  updateVolumes();
 
   @override
   Widget build(BuildContext context) {
@@ -60,4 +84,13 @@ setState(() {
       ),
     );
   }
+
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
+
+
+
+
+
