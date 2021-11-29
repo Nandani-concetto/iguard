@@ -23,7 +23,7 @@ class MainActivity : FlutterActivity() {
         val handler = Handler(Looper.getMainLooper())
         val volume = object: VolumeInterface{
             override fun display(count: Int) {
-                Log.d("MainActivity"," latest $count")
+                Log.d("MainActivity"," latest $count%")
                 channel.invokeMethod("entry", count )
             }
         }

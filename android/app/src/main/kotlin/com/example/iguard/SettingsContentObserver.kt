@@ -7,6 +7,7 @@ import android.util.Log
 
 import android.os.Handler
 import android.view.Display
+import androidx.core.content.ContextCompat.getSystemService
 
 class SettingsContentObserver(context: Context, handler: Handler, private val volume: VolumeInterface) : ContentObserver(handler) {
 
@@ -18,7 +19,9 @@ class SettingsContentObserver(context: Context, handler: Handler, private val vo
     override fun onChange(selfChange: Boolean) {
         val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         Log.d("Volume", "Current Volume $currentVolume")
-        volume.display(currentVolume)
+        val maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        val currentVolumeper = 100 * currentVolume / maxVolume;
+        volume.display(currentVolumeper)
 
 
     }
