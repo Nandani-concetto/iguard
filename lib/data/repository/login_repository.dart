@@ -23,7 +23,7 @@ abstract class LoginRepository {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
+      print("Response is ${response.body}");
       return Details.fromJson(jsonDecode(response.body));
     }
     else {
