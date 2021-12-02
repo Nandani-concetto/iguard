@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,19 +10,28 @@ class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
 }
-
 class _LoginViewState extends State<LoginView> {
+  final TextEditingController controller = TextEditingController();
   var emailController = TextEditingController();
   String password = '';
   String email = '';
   bool isPasswordVisible = false;
+  bool isError = false;
+  bool isWriting = false;
+  bool isLoginPressed = false;
+  int counter = 0;
+  String myErrorString = "";
+  late TextSelection currentPosition;
   final formKey = GlobalKey<FormState>();
+  final emailKey = GlobalKey<FormFieldState>();
+  final passwordKey = GlobalKey<FormFieldState>();
+  var selected ="";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    emailController.addListener(() => setState(() {}));
+    controller.addListener(() => setState(() {}));
   }
 
   @override
@@ -157,9 +165,8 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget buildBody() {
+  Widget buildBody()  {
     return Form(
-      key: formKey,
       child: Stack(
         children: [
           Center(
@@ -183,6 +190,19 @@ class _LoginViewState extends State<LoginView> {
           ),
         ],
       ),
+      onChanged: () {
+        counter++;
+        if (counter == 2) {
+          counter = 0;
+          isLoginPressed = false;
+        }
+        if (isLoginPressed) {
+        } else {
+          isWriting = true;
+          isLoginPressed = false;
+          myErrorString = "";
+        }
+      },
     );
   }
 
@@ -198,6 +218,7 @@ class _LoginViewState extends State<LoginView> {
           )
         ]),
         child: TextFormField(
+          key: emailKey,
           controller: emailController,
           decoration: InputDecoration(
             hintText: 'name@example.com',
@@ -208,11 +229,7 @@ class _LoginViewState extends State<LoginView> {
             labelText: "Email/Licence Number",
             labelStyle:
                 TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.normal),
-            suffixIcon: emailController.text.isEmpty
-                ? Container(
-                    width: 0,
-                  )
-                : IconButton(
+            suffixIcon:  IconButton(
                     icon: Icon(Icons.close),
                     onPressed: () => emailController.clear(),
                   ),
@@ -220,11 +237,24 @@ class _LoginViewState extends State<LoginView> {
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.done,
           validator: (value) {
-            if (!RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$').hasMatch(value!)) {
-              return "Please Enter valid Email";
-            } else
-              return null;
-          }
+            if (isLoginPressed) {
+              isError = true;
+              if (value!.isEmpty) {
+                myErrorString = 'Email is Empty';
+                return myErrorString;
+              } else if (!RegExp(
+                      r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                  .hasMatch(value)) {
+                myErrorString = 'Please Enter valid Email';
+                return myErrorString;
+              }
+              isError = false;
+              myErrorString = "";
+            } else {
+              myErrorString = "";
+            }
+            return null;
+          },
         ),
       ),
     );
@@ -240,44 +270,62 @@ class _LoginViewState extends State<LoginView> {
             blurRadius: 10,
           ),
         ]),
-        child: TextFormField(
-            onChanged: (value) {
-              setState(() {
-                this.password = value;
-              });
-            },
-            onSaved: (value) {
-              setState(() {
-                this.password = value!;
-              });
-            },
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70),
-                ),
-                labelText: 'Password',
-                labelStyle: TextStyle(
-                    fontFamily: "Nunito", fontWeight: FontWeight.normal),
-
-                //errorText: "Password is wrong",
-                suffixIcon: IconButton(
-                  icon: isPasswordVisible
-                      ? Icon(Icons.visibility_off)
-                      : Icon(Icons.visibility),
-                  onPressed: () {
-                    setState(() {
-                      isPasswordVisible = !isPasswordVisible;
-                    });
-                  },
-                )),
-            obscureText: isPasswordVisible,
-            validator: (value) {
-              if (value!.length < 6) {
-                return "Password must be at least 6 character long";
-              } else
-                return null;
-            }),
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              key: passwordKey,
+              controller: controller,
+              onChanged: (value) {
+                setState(() {
+                  this.password = value;
+                });
+              },
+              onSaved: (value) {
+                setState(() {
+                  this.password = value!;
+                });
+              },
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white70),
+                  ),
+                  labelText: 'Password',
+                  labelStyle: TextStyle(
+                      fontFamily: "Nunito", fontWeight: FontWeight.normal),
+                  suffixIcon: IconButton(
+                    icon: isPasswordVisible
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        isPasswordVisible = !isPasswordVisible;
+                      });
+                    },
+                  )),
+              obscureText: isPasswordVisible,
+              validator: (value) {
+                myErrorString = "";
+                if (isLoginPressed) {
+                  isError = true;
+                  if (value!.isEmpty) {
+                    myErrorString = 'Please Enter Password';
+                    return myErrorString;
+                  } else if (value.length < 6) {
+                    myErrorString =
+                        'Password must be at least 6 character long';
+                    //validateMe();
+                    return myErrorString;
+                  }
+                  isError = false;
+                  myErrorString = "";
+                } else {
+                  myErrorString = "";
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -307,7 +355,8 @@ class _LoginViewState extends State<LoginView> {
         width: 350,
         child: BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
           if (state is LoginErrorState) {
-            alertDialog(context, state.message);
+            displayDialog(context,state.message);
+
           }
           if (state is LoginLoadedState) {
             Navigator.pushNamed(context, '/extractArguments',
@@ -322,13 +371,21 @@ class _LoginViewState extends State<LoginView> {
 
           return ElevatedButton(
             onPressed: () {
-              final isValid = formKey.currentState!.validate();
+              counter = 1;
+              isWriting = false;
+              isLoginPressed = true;
+              final isValid = emailKey.currentState!.validate();
               if (isValid) {
-                formKey.currentState!.save();
-                BlocProvider.of<LoginBloc>(context)
-                    .add(UpdateLoginEvent(emailController.text, password));
-                print("Email : ${emailController.text}");
-                print("PassWord : ${password}");
+                emailKey.currentState!.save();
+                final success=passwordKey.currentState!.validate();
+                if(success){
+                  passwordKey.currentState!.save();
+                  BlocProvider.of<LoginBloc>(context)
+                      .add(UpdateLoginEvent(emailController.text, password));
+                  print("Email : ${emailController.text}");
+                  print("PassWord : ${password}");
+                }
+
               }
             },
             style: ElevatedButton.styleFrom(primary: Colors.black),
@@ -346,34 +403,35 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void alertDialog(BuildContext context, String message) =>
-      showerrordialog(context, message);
-
-  void showerrordialog(BuildContext context, String message) {
-    showDialog(
+  displayDialog(BuildContext context,String message) async {
+    await showDialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Alert'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(message),
-                ],
+        builder:(BuildContext context){
+          return SimpleDialog(
+            title: Text('Welcome'),
+            children:[
+              SimpleDialogOption(
+                child:  Text(message,
+                  style: TextStyle(
+                    fontSize:15
+                  ),
+                ),
               ),
-            ),
-            actions: [
-              TextButton(
-                child: const Text('Ok'),
+              SimpleDialogOption(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 },
-              )
+                child:Padding(
+                  padding: const EdgeInsets.only(left:210),
+                  child: Text("OK"),
+                ),
+              ),
             ],
+           // elevation: 10,
           );
-        });
+        }
+    );
   }
-
   Widget grtBackgroundImage() {
     return Align(
       alignment: Alignment.bottomRight,
